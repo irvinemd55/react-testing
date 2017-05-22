@@ -2,17 +2,16 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { getOMDBDetails } from './actionCreators'
 import Header from './Header'
-
 const { shape, string, func } = React.PropTypes
 
 const Details = React.createClass({
   propTypes: {
     show: shape({
       title: string,
-      description: string,
       year: string,
       poster: string,
       trailer: string,
+      description: string,
       imdbID: string
     }),
     omdbData: shape({
@@ -20,7 +19,6 @@ const Details = React.createClass({
     }),
     dispatch: func
   },
-  // use this for GET requests
   componentDidMount () {
     if (!this.props.omdbData.imdbRating) {
       this.props.dispatch(getOMDBDetails(this.props.show.imdbID))
@@ -54,6 +52,11 @@ const Details = React.createClass({
 
 const mapStateToProps = (state, ownProps) => {
   const omdbData = state.omdbData[ownProps.show.imdbID] ? state.omdbData[ownProps.show.imdbID] : {}
+  // if (state.omdbData[ownProps.show.imdbID]) {
+  //   omdbData = state.omdbData[ownProps.show.imdbID]
+  // } else {
+  //   omdbData = {}
+  // }
   return {
     omdbData
   }
